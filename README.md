@@ -1,21 +1,37 @@
-# esp32-marauder-ST7789
-ESP32 Marauder firmware build for Kit hardware (ST7789 display + XPT2046 touch) documenting an open touch axis-swapping bug
-# ESP32 Marauder Kit (v1.14.0) - ST7789 Display & Touch Axis Bug
+# ESP32 Marauder - ST7789 & XPT2046 Custom Build
 
-This repository documents an active configuration and build attempt based on the **official [ESP32 Marauder](https://github.com/justcallmekoko/ESP32Marauder) project (v1.14.0)**, specifically adapted for custom kit hardware utilizing an **ST7789 TFT display** paired with an **XPT2046 touch controller** on an ESP32 Dev Module.
+A fully configured and working build of **ESP32 Marauder (v1.14.1)** optimized specifically for custom hardware setups utilizing an **ST7789 TFT Display (240x320)** paired with an **XPT2046 Touch Controller** on an ESP32 Dev Module.
 
-## Project Base & Hardware Configuration
-* **Upstream Source:** Official ESP32 Marauder (v1.14.0) by justcallmekoko
-* **Microcontroller:** ESP32 Dev Module
-* **Display Panel:** ST7789 TFT Display (Running in Landscape Mode)
-* **Touch Controller:** XPT2046
+---
 
-## The Touch Issue Details
-While the display initializes, clears static noise, and successfully renders the Marauder UI and selection menus, the **touch input subsystem suffers from a severe axis-mapping and inversion bug**:
+## 🚀 Features & Fixes Included
+* **Display Integration:** Configured via `MARAUDER_V6` and `TFT_DIY` profiles for seamless ST7789 landscape rendering.
+* **Color Correction:** Set `TFT_INVERSION_OFF` to ensure proper black backgrounds and standard color rendering.
+* **Calibrated Touch:** Fixed axis inversion and coordinate-swapping bugs for the XPT2046 touch panel in landscape orientation.
+* **Enhanced UI Navigation:** Integrated direct button mapping and touch handling for smooth menu navigation.
+* **Modern Core Support:** Cleaned up linker errors and header duplicate definitions to compile cleanly on modern ESP32 Board Cores (v2.0.17).
 
-* **Cross-Mapped Axes:** The touch coordinates are completely out of sync with the visual landscape layout. Horizontal inputs/touches trigger vertical navigation shifts, and vice versa. 
-* **Failed Calibration:** Standard custom calibration arrays (`calData[5]`) and built-in `TFT_eSPI` landscape rotation flags inside `Display.cpp` fail to properly align the raw touch grid with the menu selection bars. 
-* **Inaccurate Taps:** Tapping directly on a highlighted menu row does not register correctly; inputs feel shifted, rotated, or mirrored relative to where the finger lands on the screen.
+---
 
-## Help Wanted / Contributing
-If you are experienced with `TFT_eSPI` touch mapping, XPT2046 driver tuning, or fixing coordinate matrices for ST7789 panels in ESP32 Marauder, contributions, suggestions, and pull requests to solve this touch layout bug are extremely welcome!
+## 📌 Hardware Pinout Configuration (`User_Setup.h`)
+| Pin Function | ESP32 GPIO Pin |
+| :--- | :--- |
+| **TFT_MISO** | GPIO 19 |
+| **TFT_MOSI** | GPIO 23 |
+| **TFT_SCLK** | GPIO 18 |
+| **TFT_CS** | GPIO 17 |
+| **TFT_DC** | GPIO 16 |
+| **TFT_RST** | GPIO 5 |
+| **TFT_BL** | GPIO 32 |
+| **TOUCH_CS** | GPIO 21 |
+| **SD_CS** | GPIO 4 |
+
+---
+
+## 📦 Flashing Guide
+Pre-compiled binaries are available in the **Releases** section. If you are flashing manually via `esptool` or a web flasher, use the following memory offsets:
+
+* **Bootloader (`bootloader.bin`):** `0x1000`
+* **Partitions (`partitions.bin`):** `0x8000`
+* **Boot App (`boot_app0.bin`):** `0xE000`
+* **Firmware (`esp32_marauder.ino.bin`):** `0x10000`
