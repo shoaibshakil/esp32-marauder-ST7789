@@ -1,6 +1,6 @@
 # ESP32 Marauder - ST7789 & XPT2046 Custom Build
 
-A fully configured and working build of **ESP32 Marauder (v1.14.1)** optimized specifically for custom hardware setups utilizing an **ST7789 TFT Display (240x320)** paired with an **XPT2046 Touch Controller** on an ESP32 Dev Module.
+A fully configured and working build of ESP32 Marauder (v1.14.3) optimized specifically for custom hardware setups... optimized specifically for custom hardware setups utilizing an **ST7789 TFT Display (240x320)** paired with an **XPT2046 Touch Controller** on an ESP32 Dev Module.
 
 ---
 
